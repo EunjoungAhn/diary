@@ -27,6 +27,9 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
     "assets/img/ico-weather_3.png",
   ];
 
+  TextEditingController nameController = TextEditingController();
+  TextEditingController memoController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +48,7 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
           if(index == 0){
             return InkWell(
               child: Container(
+                margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 width: 100,
                 height: 100,
                 child: Image.asset(
@@ -87,7 +91,42 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
               ),
             );
           }
-          
+          else if (index == 2) {
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              child: Text("제목", style: TextStyle(fontSize: 20),),
+            );
+          }
+          else if (index == 3) {
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              child: TextField(
+                controller: nameController,
+              ),
+            );
+          }
+          else if (index == 4) {
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              child: Text("내용", style: TextStyle(fontSize: 20),),
+            );
+          }
+          else if (index == 5) {
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 16),
+              child: TextField(
+                controller: memoController,
+                minLines: 10,
+                maxLines: 20,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black)
+                  )
+                ),
+              ),
+            );
+          }
+
           return Container();
         },
         itemCount: 6,
