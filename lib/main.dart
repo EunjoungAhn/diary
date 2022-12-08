@@ -112,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: "통계"
           ),
         ],
+        currentIndex: selectIndex,
         onTap: (index) {
           setState(() {
             selectIndex = index;
@@ -191,6 +192,9 @@ class _MyHomePageState extends State<MyHomePage> {
           return Container(
             child: TableCalendar(
               calendarController: calendarController,
+              onDaySelected: (day, events, holidays) {
+                print(day);
+              },
             ),
           );
         }
