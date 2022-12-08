@@ -266,6 +266,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Text(historyDiary.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                     Container(height: 12,),
                     Text(historyDiary.memo, style: TextStyle(fontSize: 18),),
+                    Image.asset(historyDiary.image, fit: BoxFit.cover,)
                   ],
                 ),
               ),
