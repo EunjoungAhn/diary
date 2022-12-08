@@ -3,6 +3,7 @@ import 'package:diary/data/diary.dart';
 import 'package:diary/data/util.dart';
 import 'package:diary/write.dart';
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +43,9 @@ class _MyHomePageState extends State<MyHomePage> {
     "assets/img/ico-weather_2.png",
     "assets/img/ico-weather_3.png",
   ];
+
+  // 캘린더를 사용하기 위한 컨트롤러 설정
+  CalendarController calendarController = CalendarController();
 
   // DB에 저장된 값 가져오기 위해 설정
   final dbHelper = DatabaseHelper.instance;
@@ -181,7 +185,20 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget getHistoryPage(){
-    return Container();
+    return Container(
+      child: ListView.builder(itemBuilder: (context, index) {
+        if(index == 0){
+          return Container(
+            child: TableCalendar(
+              calendarController: calendarController,
+            ),
+          );
+        }
+        return Container();
+      },
+        itemCount: 2,
+      ),
+    );
   }
 
   Widget getChartPage(){
