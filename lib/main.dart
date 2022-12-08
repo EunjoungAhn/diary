@@ -1,3 +1,6 @@
+import 'package:diary/data/diary.dart';
+import 'package:diary/data/util.dart';
+import 'package:diary/write.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,11 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: ''),
     );
   }
 }
@@ -44,8 +47,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
+        onPressed: () async {
+           await Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiaryWritePage(
+              diary: Diary(
+                date: Utils.getFormatTime(DateTime.now()),
+                title: "",
+                memo: "",
+                status: 0,
+                image: ""
+              ),
+            )));
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
