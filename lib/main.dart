@@ -76,14 +76,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-           await Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiaryWritePage(
-              diary: Diary(
+          Diary _d;
+          if(todayDiary != null){
+            _d = todayDiary;
+          }else{
+            _d = Diary(
                 date: Utils.getFormatTime(DateTime.now()),
                 title: "",
                 memo: "",
                 status: 0,
                 image: "assets/img/b1.jpg"
-              ),
+                );
+          }
+           await Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiaryWritePage(
+              diary: _d,
             )));
            getTodayDiary();
         },
@@ -149,7 +155,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       color: Colors.white),),
                       Image.asset(statusimg[todayDiary.status], fit: BoxFit.contain,)
                     ],
-                  )
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Text(todayDiary.title, style: TextStyle(fontSize: 18),),
+                        Container(height: 12,),
+                        Text(todayDiary.memo, style: TextStyle(fontSize: 18),),
+                      ],
+                    ),
+                  ),
                 ],
               )
           ),

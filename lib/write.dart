@@ -49,6 +49,8 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
           TextButton(
             onPressed: () async {
               // 내용 저장
+              widget.diary.title = nameController.text;
+              widget.diary.memo = memoController.text;
               await dbHelper.insertDiary(widget.diary);
               Navigator.of(context).pop();
             },
