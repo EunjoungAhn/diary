@@ -32,8 +32,8 @@ class DatabaseHelper {
       date INTEGER DEFAULT 0,
       title String,
       memo String,
-      image String
-      status INTEGER DEFAULT 0,
+      image String,
+      status INTEGER DEFAULT 0
     )
     ''');
   }
@@ -47,7 +47,6 @@ class DatabaseHelper {
     List<Diary> d = await getDiaryByDate(diary.date);
 
     if(d.isEmpty) {
-      // 새로 추가, id는 자동 생성
       Map<String, dynamic> row = {
         "title": diary.title,
         "date": diary.date,
@@ -65,7 +64,6 @@ class DatabaseHelper {
         "memo": diary.memo,
         "status": diary.status,
       };
-      // 해당 아이디어의 정보를 수정, 없으면 새로운 아이디를 위가하여 위의 코드를 실행
       return await db.update(diaryTable, row, where: "date = ?", whereArgs: [diary.date]);
     }
 
