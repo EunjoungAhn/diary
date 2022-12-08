@@ -2,19 +2,15 @@
 class Diary {
   String title;
   String memo;
-  String category;
-  int color;
-  int done;
+  String image;
   int date;
-  int id;
+  int status;
 
   Diary({
     this.title,
     this.memo,
-    this.category,
-    this.color,
-    this.done,
+    this.image,
     this.date,
-    this.id
+    this.status
   });
 }
