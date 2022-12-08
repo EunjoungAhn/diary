@@ -47,9 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
   // 캘린더를 사용하기 위한 컨트롤러 설정
   CalendarController calendarController = CalendarController();
 
+  DateTime time = DateTime.now();
+
   // DB에 저장된 값 가져오기 위해 설정
   final dbHelper = DatabaseHelper.instance;
   Diary todayDiary;
+  // 기록 페이지에서 선택된 날짜의 다이어리가 보여야 함으로
+  Diary historyDiary;
 
   void getTodayDiary() async {
     List<Diary> diary = await dbHelper.getDiaryByDate(Utils.getFormatTime(DateTime.now()));
@@ -77,22 +81,42 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Diary _d;
-          if(todayDiary != null){
-            _d = todayDiary;
-          }else{
-            _d = Diary(
-                date: Utils.getFormatTime(DateTime.now()),
-                title: "",
-                memo: "",
-                status: 0,
-                image: "assets/img/b1.jpg"
-                );
+          if(selectIndex == 0){
+            Diary _d;
+            if(todayDiary != null){
+              _d = todayDiary;
+            }else{
+              _d = Diary(
+                  date: Utils.getFormatTime(DateTime.now()),
+                  title: "",
+                  memo: "",
+                  status: 0,
+                  image: "assets/img/b1.jpg"
+                  );
+            }
+             await Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiaryWritePage(
+                diary: _d,
+              )));
+             getTodayDiary();
           }
-           await Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiaryWritePage(
+          else {
+            Diary _d;
+            if(todayDiary != null){
+              _d = todayDiary;
+            }else{
+              _d = Diary(
+                  date: Utils.getFormatTime(time),
+                  title: "",
+                  memo: "",
+                  status: 0,
+                  image: "assets/img/b1.jpg"
+              );
+            }
+            await Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiaryWritePage(
               diary: _d,
             )));
-           getTodayDiary();
+            getDiaryByDate(time);
+          }
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
@@ -185,6 +209,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void getDiaryByDate(DateTime date) async {
+    // DB에서 날짜를 숫자 형태로 가져와라
+    List<Diary> d = await dbHelper.getDiaryByDate(Utils.getFormatTime(date));
+    setState(() {
+      if(d.isEmpty){
+        historyDiary = null;
+      }else{
+        historyDiary = d.first;
+      }
+    });
+  }
+
   Widget getHistoryPage(){
     return Container(
       child: ListView.builder(itemBuilder: (context, index) {
@@ -192,10 +228,48 @@ class _MyHomePageState extends State<MyHomePage> {
           return Container(
             child: TableCalendar(
               calendarController: calendarController,
-              onDaySelected: (day, events, holidays) {
-                print(day);
+              onDaySelected: (date, events, holidays) {
+                print(date);
+                time = date;
+                getDiaryByDate(date);
               },
             ),
+          );
+        }
+        else if (index == 1){
+          if(historyDiary == null){ return Container(); }
+
+          return Column(
+            children: [
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("${time.month}.${time.day}",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
+                          color: Colors.black),),
+                    Image.asset(statusimg[historyDiary.status], fit: BoxFit.contain,)
+                  ],
+                ),
+                margin: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white54,
+                    borderRadius: BorderRadius.circular(16)
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(historyDiary.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    Container(height: 12,),
+                    Text(historyDiary.memo, style: TextStyle(fontSize: 18),),
+                  ],
+                ),
+              ),
+            ],
           );
         }
         return Container();
