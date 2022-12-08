@@ -68,9 +68,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Container(
         child: getPage(),
       ),
@@ -147,19 +144,29 @@ class _MyHomePageState extends State<MyHomePage> {
           Positioned.fill(
               child: ListView(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("${DateTime.now().month}.${DateTime.now().day}",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
-                      color: Colors.white),),
-                      Image.asset(statusimg[todayDiary.status], fit: BoxFit.contain,)
-                    ],
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("${DateTime.now().month}.${DateTime.now().day}",
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
+                        color: Colors.white),),
+                        Image.asset(statusimg[todayDiary.status], fit: BoxFit.contain,)
+                      ],
+                    ),
+                    margin: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                   ),
                   Container(
+                    margin: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white54,
+                      borderRadius: BorderRadius.circular(16)
+                    ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(todayDiary.title, style: TextStyle(fontSize: 18),),
+                        Text(todayDiary.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                         Container(height: 12,),
                         Text(todayDiary.memo, style: TextStyle(fontSize: 18),),
                       ],
