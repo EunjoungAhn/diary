@@ -322,9 +322,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 100,
                     width: 100,
                     child: Image.asset(allDiaries[_index].image, fit: BoxFit.cover,),
+                    margin: EdgeInsets.symmetric(horizontal: 8),
                   );
                 }),
                 scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: 20),
               ),
               height: 120,
             );
