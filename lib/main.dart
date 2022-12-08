@@ -37,6 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   int selectIndex = 0;
+  List<Diary> allDiaries = [];
 
   List<String> statusimg = [
     "assets/img/ico-weather.png",
@@ -62,6 +63,13 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     // 함수를 통해서 setState를 할 수 있지만 바로, initState에서는 setState를 할 수 없어서
     // 함수화로 만든 후, initState에 넣어주는 것이다.
+    setState(() {
+
+    });
+  }
+
+  void getAllDiary() async {
+    allDiaries = await dbHelper.getAllDiary();
     setState(() {
 
     });
@@ -141,6 +149,9 @@ class _MyHomePageState extends State<MyHomePage> {
           setState(() {
             selectIndex = index;
           });
+          if(selectIndex == 2){
+            getAllDiary();
+          }
         },
       ),// This trailing comma makes auto-formatting nicer for build methods.
     );
@@ -281,6 +292,29 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget getChartPage(){
-    return Container();
+    return Container(
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          if(index == 0){
+            return Container(
+              child: Row(
+                children: List.generate(statusimg.length, (_index) {
+                  return Container(
+                    child: Column(
+                      children: [
+                        Image.asset(statusimg[_index], fit: BoxFit.contain,),
+                        Text("${allDiaries.where((element) => element.status == _index).length}개")
+                      ],
+                    ),
+                  );
+                }),
+              ),
+            );
+          }
+          return Container();
+        },
+        itemCount: 5,
+      ),
+    );
   }
 }
