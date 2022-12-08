@@ -61,6 +61,12 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
       body: ListView.builder(
         itemBuilder: (context, index) {
           if(index == 0){
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              child: Text("${widget.diary.date}", style: TextStyle(fontSize: 20),),
+            );
+          }
+          else if(index == 1){
             return InkWell(
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -79,7 +85,7 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
                 });
               },
             );
-          }else if(index == 1){
+          }else if(index == 2){
             return Container(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -107,13 +113,13 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
               ),
             );
           }
-          else if (index == 2) {
+          else if (index == 3) {
             return Container(
               margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               child: Text("제목", style: TextStyle(fontSize: 20),),
             );
           }
-          else if (index == 3) {
+          else if (index == 4) {
             return Container(
               margin: EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
@@ -121,13 +127,13 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
               ),
             );
           }
-          else if (index == 4) {
+          else if (index == 5) {
             return Container(
               margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               child: Text("내용", style: TextStyle(fontSize: 20),),
             );
           }
-          else if (index == 5) {
+          else if (index == 6) {
             return Container(
               margin: EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
@@ -145,7 +151,7 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
 
           return Container();
         },
-        itemCount: 6,
+        itemCount: 7,
       ),
     );
   }

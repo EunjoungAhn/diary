@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // 캘린더를 사용하기 위한 컨트롤러 설정
   CalendarController calendarController = CalendarController();
-
+  // 이전 날짜를 가져오기 위한 변수
   DateTime time = DateTime.now();
 
   // DB에 저장된 값 가져오기 위해 설정
