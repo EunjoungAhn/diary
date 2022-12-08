@@ -297,7 +297,9 @@ class _MyHomePageState extends State<MyHomePage> {
         itemBuilder: (context, index) {
           if(index == 0){
             return Container(
+              margin: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: List.generate(statusimg.length, (_index) {
                   return Container(
                     child: Column(
@@ -309,6 +311,22 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 }),
               ),
+            );
+          }else if(index == 1) {
+            // 전체를 컨트롤러 감싸고, height을 추가한 뒤, ListView가 끝나는 지점에 scrollDirection을 넣어주면
+            // row 형식의 스크롤 바가 생성된다.
+            return Container(
+              child: ListView(
+                children: List.generate(allDiaries.length, (_index) {
+                  return Container(
+                    height: 100,
+                    width: 100,
+                    child: Image.asset(allDiaries[_index].image, fit: BoxFit.cover,),
+                  );
+                }),
+                scrollDirection: Axis.horizontal,
+              ),
+              height: 120,
             );
           }
           return Container();
