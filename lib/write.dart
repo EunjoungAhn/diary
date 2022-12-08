@@ -1,3 +1,4 @@
+import 'package:diary/data/database.dart';
 import 'package:diary/data/diary.dart';
 import 'package:flutter/material.dart';
 
@@ -30,14 +31,26 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController memoController = TextEditingController();
 
+  // 데이터 베이스에 저장을 위해 선언
+  final dbHelper = DatabaseHelper.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController.text = widget.diary.title;
+    memoController.text = widget.diary.memo;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {
-
+            onPressed: () async {
+              // 내용 저장
+              await dbHelper.insertDiary(widget.diary);
+              Navigator.of(context).pop();
             },
             child: Text("저장", style: TextStyle(color: Colors.white),),
           ),
@@ -71,6 +84,7 @@ class _DiaryWritePageState extends State<DiaryWritePage> {
                 children: List.generate(statusimg.length, (_index) {
                   return InkWell(
                     child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                       height: 70,
                       width: 70,
                       child: Image.asset(statusimg[_index], fit: BoxFit.contain,),

@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 title: "",
                 memo: "",
                 status: 0,
-                image: ""
+                image: "assets/img/b1.jpg"
               ),
             )));
         },
